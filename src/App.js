@@ -1,10 +1,17 @@
+import { ChakraProvider, Center } from '@chakra-ui/react';
+import PricingCalculator from './PricingCalculator';
 
 const App = () => {
   return (
-    <div className="App">
-      <h1>olá maninhos
-      </h1>
-    </div>
+    <ChakraProvider>
+      <Center
+        minW="full" 
+        h="100vh" 
+        bg="gray.100"
+      >
+        <PricingCalculator />
+      </Center>
+    </ChakraProvider>
   );
 }
 
