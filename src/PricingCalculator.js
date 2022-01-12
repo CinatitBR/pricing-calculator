@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { 
   Container,
   VStack,
@@ -35,6 +36,16 @@ const ResultBox = ({ label, value }) => {
 }
 
 const PricingCalculator = () => {
+  const values = useState({ 
+    productCost: null,
+    sellCost: null,
+    packageCost: null,
+    shipmentCost: null,
+    sellerCommission: null,
+    recommendationCommission: null,
+    taxesCost: null,
+  });
+
   return (
     <Container 
       maxW="container.lg" 
@@ -131,7 +142,7 @@ const PricingCalculator = () => {
               h="100%"
               p="10px"
               bgColor="yellow.100"
-              borderRadius="4px"
+              borderRadius="md"
               border="1px solid #F6E05E"
             >
               <InputNumber 
