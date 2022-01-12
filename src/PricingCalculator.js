@@ -13,7 +13,6 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   NumberInputField,
-
   InputRightAddon
 } from '@chakra-ui/react';
 
@@ -69,6 +68,7 @@ const PricingCalculator = () => {
               label="Custo do produto" 
               placeholder="Custo do produto"
               name="product-cost"
+              helperText="Equivale a R$200 por unidade"
             />
           </GridItem>
 
