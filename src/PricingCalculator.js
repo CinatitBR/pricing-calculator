@@ -37,25 +37,23 @@ const ResultBox = ({ label, value }) => {
 
 const ResultContainer = ({ results }) => {
   return (
-    <HStack minW="full" h="100px" spacing="16px">
-      <HStack 
-        spacing={8} 
-        divider={<Divider height="80%"  bgColor="black" orientation="vertical" />}
-        w="full" 
-        bgColor="#BEE3F8"
-        border="1px solid #63B3ED"
-        borderRadius="4px"
-        height="100%"
-        p="0 20px"
-      >
-        {results.map((result, index) => 
-          <ResultBox 
-            key={index}
-            label={result.label}
-            value={result.value}
-          />
-        )}
-      </HStack>
+    <HStack 
+      spacing={8} 
+      height="100px"
+      divider={<Divider height="80%"  bgColor="black" orientation="vertical" />}
+      w="full" 
+      bgColor="#BEE3F8"
+      border="1px solid #63B3ED"
+      borderRadius="4px"
+      p="0 20px"
+    >
+      {results.map((result, index) => 
+        <ResultBox 
+          key={index}
+          label={result.label}
+          value={result.value}
+        />
+      )}
     </HStack>
   );
 }
