@@ -36,7 +36,7 @@ const ResultBox = ({ label, value }) => {
 }
 
 const PricingCalculator = () => {
-  const values = useState({ 
+  const [values, setValues] = useState({ 
     productCost: null,
     sellCost: null,
     packageCost: null,
@@ -44,6 +44,7 @@ const PricingCalculator = () => {
     sellerCommission: null,
     recommendationCommission: null,
     taxesCost: null,
+    productCount: 5
   });
 
   return (
@@ -67,10 +68,10 @@ const PricingCalculator = () => {
           spacing="16px" 
           minW="full"
         >
-
           <GridItem>
             <InputNumber 
               label="Custo do produto" 
+              value={values.productCost}
               placeholder="Custo do produto"
               name="product-cost"
               addon="$"
@@ -81,6 +82,7 @@ const PricingCalculator = () => {
           <GridItem>
             <InputNumber 
               label="Preço de venda" 
+              value={values.sellCost}
               placeholder="Preço de venda"
               name="sell-cost"
               addon="$"
@@ -91,6 +93,7 @@ const PricingCalculator = () => {
           <GridItem>
             <InputNumber 
               label="Custo da embalagem" 
+              value={values.packageCost}
               placeholder="Custo da embalagem"
               name="package-cost"
               addon="$"
@@ -100,6 +103,7 @@ const PricingCalculator = () => {
           <GridItem>
             <InputNumber 
               label="Custo do transporte" 
+              value={values.shipmentCost}
               placeholder="Custo do transporte"
               name="shipment-cost"
               addon="$"
@@ -109,6 +113,7 @@ const PricingCalculator = () => {
           <GridItem>
             <InputNumber 
               label="Comissão do vendedor (%)" 
+              value={values.sellerCommission}
               placeholder="Comissão do vendedor"
               name="seller-commission"
               addon="%"
@@ -120,6 +125,7 @@ const PricingCalculator = () => {
           <GridItem>
             <InputNumber 
               label="Comissão da indicação (%)" 
+              value={values.recommendationCommission}
               placeholder="Comissão da indicação"
               name="recommendation-commission"
               addon="%"
@@ -131,6 +137,7 @@ const PricingCalculator = () => {
           <GridItem>
             <InputNumber 
               label="Imposto" 
+              value={values.taxesCost}
               placeholder="Custo do imposto"
               name="taxes"
               addon="$"
@@ -154,7 +161,7 @@ const PricingCalculator = () => {
                 bgColor="gray.50"
                 borderWidth="1px"
                 min={0}
-                defaultValue={1}
+                value={values.productCount}
                 _addon={{ 
                   fontSize: 'sm', 
                   p: '4px',
@@ -174,26 +181,6 @@ const PricingCalculator = () => {
                   R$360
                 </Text> 
               </Text>
-
-              {/* <InputGroup w="150px">
-
-                <Input 
-                  type="number" 
-                  fontWeight="bold"
-                  bgColor="gray.50"
-                  defaultValue={1} 
-                  min={0} 
-                />
-
-                <InputRightAddon 
-                  children="Unidades"
-                  fontSize="sm"
-                  p="4px"
-                  fontWeight="bold"
-                  color="gray.600"
-                />
-              </InputGroup> */}
-
             </VStack>
           </GridItem>
 

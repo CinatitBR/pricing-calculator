@@ -16,6 +16,7 @@ const InputNumber = ({
   addonSide = 'left', 
   helperText,
   _addon,
+  value,
   ...props
 }) => {
   return (
@@ -42,6 +43,7 @@ const InputNumber = ({
           id={name} 
           name={name}
           type="number"
+          value={value}
           fontWeight="bold" 
           borderColor="gray.300"
           borderWidth="2px"
