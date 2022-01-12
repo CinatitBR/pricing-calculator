@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   Container,
   VStack,
@@ -35,8 +35,33 @@ const ResultBox = ({ label, value }) => {
   )
 }
 
+const ResultContainer = ({ results }) => {
+  return (
+    <HStack minW="full" h="100px" spacing="16px">
+      <HStack 
+        spacing={8} 
+        divider={<Divider height="80%"  bgColor="black" orientation="vertical" />}
+        w="full" 
+        bgColor="#BEE3F8"
+        border="1px solid #63B3ED"
+        borderRadius="4px"
+        height="100%"
+        p="0 20px"
+      >
+        {results.map((result, index) => 
+          <ResultBox 
+            key={index}
+            label={result.label}
+            value={result.value}
+          />
+        )}
+      </HStack>
+    </HStack>
+  );
+}
+
 const PricingCalculator = () => {
-  const [values, setValues] = useState({ 
+  const [inputValues, setInputValues] = useState({ 
     productCost: '',
     sellCost: '',
     packageCost: '',
@@ -44,17 +69,39 @@ const PricingCalculator = () => {
     sellerCommission: '',
     recommendationCommission: '',
     taxesCost: '',
-    productCount: 5
+    productCount: 5,
   });
+  const [totalCost, setTotalCost] = useState(null);
+  const [totalProfit, setTotalProfit] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setValues({ 
-      ...values, 
+    setInputValues({ 
+      ...inputValues, 
       [name]: value 
     });
   }
+
+  useEffect(() => {
+
+    // Check if all inputs are filled
+    const areAllInputsFilled = () => {
+      for (let [key, value] of Object.entries(inputValues)) {
+        console.log({key, value});
+
+        // If value doesn't exist
+        if (!value) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+
+    console.log(areAllInputsFilled());
+  }, [inputValues]);
 
   return (
     <Container 
@@ -81,7 +128,7 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Custo do produto" 
-              value={values.productCost}
+              value={inputValues.productCost}
               placeholder="Custo do produto"
               name="productCost"
               addon="$"
@@ -93,7 +140,7 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Preço de venda" 
-              value={values.sellCost}
+              value={inputValues.sellCost}
               placeholder="Preço de venda"
               name="sellCost"
               addon="$"
@@ -104,7 +151,7 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Custo da embalagem" 
-              value={values.packageCost}
+              value={inputValues.packageCost}
               placeholder="Custo da embalagem"
               name="packageCost"
               addon="$"
@@ -115,7 +162,7 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Custo do transporte" 
-              value={values.shipmentCost}
+              value={inputValues.shipmentCost}
               placeholder="Custo do transporte"
               name="shipmentCost"
               addon="$"
@@ -126,7 +173,7 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Comissão do vendedor (%)" 
-              value={values.sellerCommission}
+              value={inputValues.sellerCommission}
               placeholder="Comissão do vendedor"
               name="sellerCommission"
               addon="%"
@@ -139,7 +186,7 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Comissão da indicação (%)" 
-              value={values.recommendationCommission}
+              value={inputValues.recommendationCommission}
               placeholder="Comissão da indicação"
               name="recommendationCommission"
               addon="%"
@@ -152,7 +199,7 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Imposto" 
-              value={values.taxesCost}
+              value={inputValues.taxesCost}
               placeholder="Custo do imposto"
               name="taxesCost"
               addon="$"
@@ -170,14 +217,14 @@ const PricingCalculator = () => {
               <InputNumber
                 onChange={handleChange} 
                 label="Cálculo de lucro"
-                name="profitCalculation"
+                name="productCount"
                 addon="Unidades"
                 addonSide="right"
                 w="80px"
                 bgColor="gray.50"
                 borderWidth="1px"
                 min={0}
-                value={values.productCount}
+                value={inputValues.productCount}
                 _addon={{ 
                   fontSize: 'sm', 
                   p: '4px',
@@ -194,37 +241,20 @@ const PricingCalculator = () => {
                   fontSize="xl"
                   color="gray.700"
                 >
-                  R$360
+                  R${totalProfit}
                 </Text> 
               </Text>
             </VStack>
           </GridItem>
 
         </SimpleGrid>
-
-        <HStack minW="full" h="100px" spacing="16px">
-          <HStack 
-            spacing={8} 
-            divider={<Divider height="80%"  bgColor="black" orientation="vertical" />}
-            w="full" 
-            bgColor="#BEE3F8"
-            border="1px solid #63B3ED"
-            borderRadius="4px"
-            height="100%"
-            p="0 20px"
-          >
-            <ResultBox 
-              label="Custo total (unidade)"
-              value="R$ 35"
-            />
-
-            <ResultBox 
-              label="Porcentagem de lucro"
-              value="50%"
-            />
-          </HStack>
-        </HStack>
-
+        
+        <ResultContainer
+          results={[
+            { label: 'Custo total por unidade', value: 'R$300' },
+            { label: 'Porcentagem de lucro', value: '50%' }
+          ]}
+        />
       </VStack>
     </Container>
   )
