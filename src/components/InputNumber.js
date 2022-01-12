@@ -3,11 +3,19 @@ import {
   FormLabel,
   InputGroup,
   InputLeftAddon,
+  InputRightAddon,
   Input,
   FormHelperText
 } from '@chakra-ui/react'
 
-const InputNumber = ({ label, placeholder, name, helperText }) => {
+const InputNumber = ({ 
+  label, 
+  placeholder, 
+  name, 
+  addon, 
+  addonSide = 'left', 
+  helperText
+}) => {
   return (
     <FormControl fontWeight="bold">
       <FormLabel 
@@ -19,11 +27,13 @@ const InputNumber = ({ label, placeholder, name, helperText }) => {
       </FormLabel>
 
       <InputGroup>
-        <InputLeftAddon
-          children="R$"
-          bgColor="gray.200"
-          color="gray.500"
-        />
+        {addonSide === 'left' &&
+          <InputLeftAddon
+            children={addon}
+            bgColor="gray.200"
+            color="gray.500"
+          />
+        }
         
         <Input 
           id={name} 
@@ -35,10 +45,18 @@ const InputNumber = ({ label, placeholder, name, helperText }) => {
           placeholder={placeholder}
           _placeholder={{ fontWeight: 'normal' }}
         />  
+
+        {addonSide === 'right' &&
+          <InputRightAddon
+            children={addon}
+            bgColor="gray.200"
+            color="gray.500"
+          />
+        } 
       </InputGroup>
 
       {helperText && 
-        <FormHelperText color="purple.400">
+        <FormHelperText>
           {helperText}
         </FormHelperText>
       }
