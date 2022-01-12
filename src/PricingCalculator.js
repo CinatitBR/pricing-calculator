@@ -37,15 +37,24 @@ const ResultBox = ({ label, value }) => {
 
 const PricingCalculator = () => {
   const [values, setValues] = useState({ 
-    productCost: null,
-    sellCost: null,
-    packageCost: null,
-    shipmentCost: null,
-    sellerCommission: null,
-    recommendationCommission: null,
-    taxesCost: null,
+    productCost: '',
+    sellCost: '',
+    packageCost: '',
+    shipmentCost: '',
+    sellerCommission: '',
+    recommendationCommission: '',
+    taxesCost: '',
     productCount: 5
   });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setValues({ 
+      ...values, 
+      [name]: value 
+    });
+  }
 
   return (
     <Container 
@@ -69,53 +78,57 @@ const PricingCalculator = () => {
           minW="full"
         >
           <GridItem>
-            <InputNumber 
+            <InputNumber
+              onChange={handleChange} 
               label="Custo do produto" 
               value={values.productCost}
               placeholder="Custo do produto"
-              name="product-cost"
+              name="productCost"
               addon="$"
               helperText="Equivale a R$200 por unidade"
             />
           </GridItem>
 
           <GridItem>
-            <InputNumber 
+            <InputNumber
+              onChange={handleChange} 
               label="Preço de venda" 
               value={values.sellCost}
               placeholder="Preço de venda"
-              name="sell-cost"
+              name="sellCost"
               addon="$"
             />
           </GridItem>
 
-
           <GridItem>
-            <InputNumber 
+            <InputNumber
+              onChange={handleChange} 
               label="Custo da embalagem" 
               value={values.packageCost}
               placeholder="Custo da embalagem"
-              name="package-cost"
+              name="packageCost"
               addon="$"
             />
           </GridItem>
 
           <GridItem>
-            <InputNumber 
+            <InputNumber
+              onChange={handleChange} 
               label="Custo do transporte" 
               value={values.shipmentCost}
               placeholder="Custo do transporte"
-              name="shipment-cost"
+              name="shipmentCost"
               addon="$"
             />
           </GridItem>
 
           <GridItem>
-            <InputNumber 
+            <InputNumber
+              onChange={handleChange} 
               label="Comissão do vendedor (%)" 
               value={values.sellerCommission}
               placeholder="Comissão do vendedor"
-              name="seller-commission"
+              name="sellerCommission"
               addon="%"
               addonSide="right"
               helperText="Equivale a R$0.20 por unidade"
@@ -123,11 +136,12 @@ const PricingCalculator = () => {
           </GridItem>
 
           <GridItem>
-            <InputNumber 
+            <InputNumber
+              onChange={handleChange} 
               label="Comissão da indicação (%)" 
               value={values.recommendationCommission}
               placeholder="Comissão da indicação"
-              name="recommendation-commission"
+              name="recommendationCommission"
               addon="%"
               addonSide="right"
               helperText="Equivale a R$0.20 por unidade"
@@ -135,11 +149,12 @@ const PricingCalculator = () => {
           </GridItem>
 
           <GridItem>
-            <InputNumber 
+            <InputNumber
+              onChange={handleChange} 
               label="Imposto" 
               value={values.taxesCost}
               placeholder="Custo do imposto"
-              name="taxes"
+              name="taxesCost"
               addon="$"
             />
           </GridItem>
@@ -152,9 +167,10 @@ const PricingCalculator = () => {
               borderRadius="md"
               border="1px solid #F6E05E"
             >
-              <InputNumber 
+              <InputNumber
+                onChange={handleChange} 
                 label="Cálculo de lucro"
-                name="profit-calc"
+                name="profitCalculation"
                 addon="Unidades"
                 addonSide="right"
                 w="80px"
@@ -187,7 +203,6 @@ const PricingCalculator = () => {
         </SimpleGrid>
 
         <HStack minW="full" h="100px" spacing="16px">
-
           <HStack 
             spacing={8} 
             divider={<Divider height="80%"  bgColor="black" orientation="vertical" />}
