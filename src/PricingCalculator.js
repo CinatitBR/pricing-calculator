@@ -68,6 +68,7 @@ const PricingCalculator = () => {
               label="Custo do produto" 
               placeholder="Custo do produto"
               name="product-cost"
+              addon="$"
               helperText="Equivale a R$200 por unidade"
             />
           </GridItem>
@@ -77,6 +78,7 @@ const PricingCalculator = () => {
               label="Preço de venda" 
               placeholder="Preço de venda"
               name="sell-cost"
+              addon="$"
             />
           </GridItem>
 
@@ -86,6 +88,7 @@ const PricingCalculator = () => {
               label="Custo da embalagem" 
               placeholder="Custo da embalagem"
               name="package-cost"
+              addon="$"
             />
           </GridItem>
 
@@ -94,14 +97,29 @@ const PricingCalculator = () => {
               label="Custo do transporte" 
               placeholder="Custo do transporte"
               name="shipment-cost"
+              addon="$"
             />
           </GridItem>
 
           <GridItem>
             <InputNumber 
-              label="Comissão do vendedor" 
+              label="Comissão do vendedor (%)" 
               placeholder="Comissão do vendedor"
               name="seller-commission"
+              addon="%"
+              addonSide="right"
+              helperText="Equivale a R$0.20 por unidade"
+            />
+          </GridItem>
+
+          <GridItem>
+            <InputNumber 
+              label="Comissão da indicação (%)" 
+              placeholder="Comissão da indicação"
+              name="recommendation-commission"
+              addon="%"
+              addonSide="right"
+              helperText="Equivale a R$0.20 por unidade"
             />
           </GridItem>
 
@@ -110,6 +128,7 @@ const PricingCalculator = () => {
               label="Imposto" 
               placeholder="Custo do imposto"
               name="taxes"
+              addon="$"
             />
           </GridItem>
 
