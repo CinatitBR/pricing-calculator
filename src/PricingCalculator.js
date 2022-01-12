@@ -35,7 +35,7 @@ const ResultBox = ({ label, value }) => {
   )
 }
 
-const ResultContainer = ({ results }) => {
+const ContainerResults = ({ results }) => {
   return (
     <HStack 
       spacing={8} 
@@ -56,6 +56,56 @@ const ResultContainer = ({ results }) => {
       )}
     </HStack>
   );
+}
+
+const ContainerCalculateProfit = ({ 
+  onChange, 
+  productCount, 
+  totalProfit 
+}) => {
+  return (
+    <VStack 
+      h="100%"
+      p="10px"
+      bgColor="yellow.100"
+      borderRadius="md"
+      border="1px solid #F6E05E"
+    >
+      <InputNumber
+        onChange={onChange} 
+        label="Cálculo de lucro"
+        name="productCount"
+        addon="Unidades"
+        addonSide="right"
+        w="80px"
+        bgColor="gray.50"
+        borderWidth="1px"
+        min={1}
+        value={productCount}
+        _addon={{ 
+          fontSize: 'sm', 
+          p: '4px',
+          bgColor: 'gray.100',
+          color: 'gray.600'
+        }}
+      />
+
+
+      {totalProfit &&
+        <Text color="gray.600" fontWeight="medium">
+          lucro de &nbsp;
+          <Text 
+            as="span" 
+            fontWeight="bold" 
+            fontSize="xl"
+            color="gray.700"
+          >
+            {totalProfit}
+          </Text> 
+        </Text>
+      }
+    </VStack>
+  )
 }
 
 const PricingCalculator = () => {
@@ -205,49 +255,16 @@ const PricingCalculator = () => {
           </GridItem>
 
           <GridItem>
-            <VStack 
-              h="100%"
-              p="10px"
-              bgColor="yellow.100"
-              borderRadius="md"
-              border="1px solid #F6E05E"
-            >
-              <InputNumber
-                onChange={handleChange} 
-                label="Cálculo de lucro"
-                name="productCount"
-                addon="Unidades"
-                addonSide="right"
-                w="80px"
-                bgColor="gray.50"
-                borderWidth="1px"
-                min={0}
-                value={inputValues.productCount}
-                _addon={{ 
-                  fontSize: 'sm', 
-                  p: '4px',
-                  bgColor: 'gray.100',
-                  color: 'gray.600'
-                }}
-              />
-
-              <Text color="gray.600" fontWeight="medium">
-                lucro de &nbsp;
-                <Text 
-                  as="span" 
-                  fontWeight="bold" 
-                  fontSize="xl"
-                  color="gray.700"
-                >
-                  R${totalProfit}
-                </Text> 
-              </Text>
-            </VStack>
+            <ContainerCalculateProfit
+              onChange={handleChange}
+              productCount={inputValues.productCount}
+              totalProfit={totalProfit}
+            />
           </GridItem>
 
         </SimpleGrid>
         
-        <ResultContainer
+        <ContainerResults
           results={[
             { label: 'Custo total por unidade', value: 'R$300' },
             { label: 'Porcentagem de lucro', value: '50%' }
