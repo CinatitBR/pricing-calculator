@@ -5,7 +5,7 @@ import {
   Divider
 } from '@chakra-ui/react';
 
-const DisplayResultsItem = ({ label, value }) => {
+const DisplayResultsItem = ({ label, value, valueColor = 'gray.800'}) => {
   return (
     <Box>
       <Text 
@@ -18,7 +18,7 @@ const DisplayResultsItem = ({ label, value }) => {
 
       <Text
         fontWeight="bold"
-        color="gray.800"
+        color={valueColor}
         fontSize="2xl"
       >
         {value}
@@ -44,6 +44,7 @@ const DisplayResults = ({ results }) => {
           key={index}
           label={result.label}
           value={result.value}
+          valueColor={result.valueColor}
         />
       )}
     </HStack>

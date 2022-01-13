@@ -216,7 +216,8 @@ const PricingCalculator = () => {
           results={[
             { 
               label: 'Custo total por unidade', 
-              value: `R$${totalCost}` 
+              value: `R$${totalCost}`, 
+              valueColor: 'red.600'
             }
           ]}
         />
