@@ -190,11 +190,10 @@ const PricingCalculator = () => {
     // Update totalCost
     setTotalCost(newTotalCost);
 
-    console.log(inputValues.sellCost)
-
     // Check if sellCost was entered
     if (inputValues.sellCost > 0) {
-      const newUnitProfit = inputValues.sellCost - newTotalCost;
+      let newUnitProfit = inputValues.sellCost - newTotalCost;
+      newUnitProfit = +newUnitProfit.toFixed(2); // Round unit profit to 2 decimal places
 
       // Update unit profit
       setUnitProfit(newUnitProfit);
