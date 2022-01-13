@@ -61,9 +61,9 @@ const ContainerResults = ({ results }) => {
 const ContainerCalculateProfit = ({ 
   onChange, 
   productCount, 
-  totalProfit 
+  unitProfit 
 }) => {
-  const textColor = totalProfit > 0 ? 'green.700' : 'red.700';
+  const textColor = unitProfit > 0 ? 'green.700' : 'red.700';
 
   return (
     <VStack 
@@ -94,11 +94,11 @@ const ContainerCalculateProfit = ({
 
       {productCount !== 0 &&
         <Text color={textColor} fontWeight="medium">
-          {totalProfit > 0 &&
+          {unitProfit > 0 &&
             <span>lucro de</span>
           }
 
-          {totalProfit < 0 &&
+          {unitProfit < 0 &&
             <span>prejuízo de</span>
           }
 
@@ -110,7 +110,7 @@ const ContainerCalculateProfit = ({
             fontSize="xl"
             color={textColor}
           >
-            R${productCount * Math.abs(totalProfit)}
+            R${productCount * Math.abs(unitProfit)}
           </Text> 
         </Text>
       }
@@ -132,7 +132,7 @@ const PricingCalculator = () => {
   });
 
   const [totalCost, setTotalCost] = useState(0);
-  const [totalProfit, setTotalProfit] = useState(0);
+  const [unitProfit, setUnitProfit] = useState(0);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -190,10 +190,14 @@ const PricingCalculator = () => {
     // Update totalCost
     setTotalCost(newTotalCost);
 
+    console.log(inputValues.sellCost)
+
     // Check if sellCost was entered
     if (inputValues.sellCost > 0) {
-      // Update total profit
-      setTotalProfit(inputValues.sellCost - newTotalCost);
+      const newUnitProfit = inputValues.sellCost - newTotalCost;
+
+      // Update unit profit
+      setUnitProfit(newUnitProfit);
     }
   }, [inputValues]);
 
@@ -305,7 +309,7 @@ const PricingCalculator = () => {
             <ContainerCalculateProfit
               onChange={handleChange}
               productCount={inputValues.productCount}
-              totalProfit={totalProfit}
+              unitProfit={unitProfit}
             />
           </GridItem>
 
