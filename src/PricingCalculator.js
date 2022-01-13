@@ -18,7 +18,7 @@ const PricingCalculator = () => {
     sellCost: 0,
     packageCost: 0,
     shipmentCost: 0,
-    taxesCost: 0,
+    taxesPercentage: 0,
     sellerCommission: 0,
     recommendationCommission: 0,
     productCount: 1,
@@ -66,7 +66,7 @@ const PricingCalculator = () => {
         productCost, 
         packageCost,
         shipmentCost,
-        taxesCost,
+        taxesPercentage,
         sellerCommission,
         recommendationCommission 
       } = inputValues;
@@ -75,7 +75,7 @@ const PricingCalculator = () => {
         productCost 
         + packageCost
         + shipmentCost
-        + ((taxesCost / 100) * productCost)
+        + ((taxesPercentage / 100) * productCost)
         + ((sellerCommission / 100) * productCost)
         + ((recommendationCommission / 100) * productCost)
       ).toFixed(2);
@@ -192,9 +192,9 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Imposto (%)" 
-              value={inputValues.taxesCost === 0 ? '' : inputValues.taxesCost}
+              value={inputValues.taxesPercentage === 0 ? '' : inputValues.taxesPercentage}
               placeholder="0.0"
-              name="taxesCost"
+              name="taxesPercentage"
               addon="%"
               addonSide="right"
             />
