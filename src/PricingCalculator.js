@@ -4,83 +4,12 @@ import {
   VStack,
   Heading, 
   SimpleGrid, 
-  GridItem, 
-  Text
+  GridItem 
 } from '@chakra-ui/react';
 
 import InputNumber from './components/InputNumber';
+import DisplayProfit from './components/DisplayProfit';
 import DisplayResults from './components/DisplayResults';
-
-const ContainerCalculateProfit = ({ 
-  onChange, 
-  productCount, 
-  unitProfit 
-}) => {
-  let textColor = '';
-  
-  // Set textColor
-  if (unitProfit > 0) {
-    textColor = 'green.700';
-  }
-  else if (unitProfit < 0) {
-    textColor = 'red.700';
-  }
-  else {
-    textColor = 'gray.600'
-  }
-  
-  return (
-    <VStack 
-      h="100%"
-      p="10px"
-      bgColor="yellow.100"
-      borderRadius="md"
-      border="1px solid #F6E05E"
-    >
-      <InputNumber
-        onChange={onChange} 
-        label="Cálculo de lucro"
-        name="productCount"
-        addon="Unidades"
-        addonSide="right"
-        w="80px"
-        bgColor="gray.50"
-        borderWidth="1px"
-        value={productCount === 0 ? '' : productCount}
-        placeholder="0"
-        _addon={{ 
-          fontSize: 'sm', 
-          p: '4px',
-          bgColor: 'gray.100',
-          color: 'gray.600'
-        }}
-      />
-
-      {productCount !== 0 &&
-        <Text color={textColor} fontWeight="medium">
-          {unitProfit >= 0 &&
-            <span>lucro de</span>
-          }
-
-          {unitProfit < 0 &&
-            <span>prejuízo de</span>
-          }
-
-          &nbsp;
-
-          <Text 
-            as="span" 
-            fontWeight="bold" 
-            fontSize="xl"
-            color={textColor}
-          >
-            R${productCount * Math.abs(unitProfit)}
-          </Text> 
-        </Text>
-      }
-    </VStack>
-  )
-}
 
 const PricingCalculator = () => {
   // Input values
@@ -97,6 +26,10 @@ const PricingCalculator = () => {
 
   const [totalCost, setTotalCost] = useState(0);
   const [unitProfit, setUnitProfit] = useState(0);
+
+  // Absolute values from the percentage
+  const sellerCommissionAbs = inputValues.sellerCommission * inputValues.productCost;
+  const recommendationComissionAbs = inputValues.sellerCommission * inputValues.productCost;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -151,7 +84,7 @@ const PricingCalculator = () => {
     // Get current total cost
     const newTotalCost = getTotalCost();
 
-    // Update totalCost
+    // Update some states
     setTotalCost(newTotalCost);
 
     // Check if sellCost was entered
@@ -193,7 +126,6 @@ const PricingCalculator = () => {
               placeholder="0.00"
               name="productCost"
               addon="$"
-              helperText="Equivale a R$200 por unidade"
             />
           </GridItem>
 
@@ -239,7 +171,7 @@ const PricingCalculator = () => {
               name="sellerCommission"
               addon="%"
               addonSide="right"
-              helperText="Equivale a R$0.20 por unidade"
+              helperText={`Equivale a R$${sellerCommissionAbs} por unidade`}
             />
           </GridItem>
 
@@ -252,7 +184,7 @@ const PricingCalculator = () => {
               name="recommendationCommission"
               addon="%"
               addonSide="right"
-              helperText="Equivale a R$0.20 por unidade"
+              helperText={`Equivale a R$${recommendationComissionAbs} por unidade`}
             />
           </GridItem>
 
@@ -269,7 +201,7 @@ const PricingCalculator = () => {
           </GridItem>
 
           <GridItem>
-            <ContainerCalculateProfit
+            <DisplayProfit
               onChange={handleChange}
               productCount={inputValues.productCount}
               unitProfit={unitProfit}
