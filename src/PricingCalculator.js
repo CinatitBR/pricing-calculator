@@ -14,9 +14,6 @@ import {
 import InputNumber from './components/InputNumber';
 
 const ResultBox = ({ label, value }) => {
-  // Check if value doesn't exist
-  if (value === null) return null;
-
   return (
     <Box>
       <Text 
@@ -66,6 +63,8 @@ const ContainerCalculateProfit = ({
   productCount, 
   totalProfit 
 }) => {
+  const textColor = totalProfit > 0 ? 'green.700' : 'red.700';
+
   return (
     <VStack 
       h="100%"
@@ -83,7 +82,8 @@ const ContainerCalculateProfit = ({
         w="80px"
         bgColor="gray.50"
         borderWidth="1px"
-        value={productCount}
+        value={productCount === 0 ? '' : productCount}
+        placeholder="0"
         _addon={{ 
           fontSize: 'sm', 
           p: '4px',
@@ -92,17 +92,25 @@ const ContainerCalculateProfit = ({
         }}
       />
 
+      {productCount !== 0 &&
+        <Text color={textColor} fontWeight="medium">
+          {totalProfit > 0 &&
+            <span>lucro de</span>
+          }
 
-      {totalProfit &&
-        <Text color="gray.600" fontWeight="medium">
-          lucro de &nbsp;
+          {totalProfit < 0 &&
+            <span>prejuízo de</span>
+          }
+
+          &nbsp;
+
           <Text 
             as="span" 
             fontWeight="bold" 
             fontSize="xl"
-            color="gray.700"
+            color={textColor}
           >
-            {totalProfit}
+            R${productCount * Math.abs(totalProfit)}
           </Text> 
         </Text>
       }
@@ -120,11 +128,11 @@ const PricingCalculator = () => {
     taxesCost: 0,
     sellerCommission: 0,
     recommendationCommission: 0,
-    productCount: 5,
+    productCount: 1,
   });
 
-  const [totalCost, setTotalCost] = useState(null);
-  const [totalProfit, setTotalProfit] = useState(null);
+  const [totalCost, setTotalCost] = useState(0);
+  const [totalProfit, setTotalProfit] = useState(0);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -181,6 +189,12 @@ const PricingCalculator = () => {
 
     // Update totalCost
     setTotalCost(newTotalCost);
+
+    // Check if sellCost was entered
+    if (inputValues.sellCost > 0) {
+      // Update total profit
+      setTotalProfit(inputValues.sellCost - newTotalCost);
+    }
   }, [inputValues]);
 
   return (
