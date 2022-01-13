@@ -63,8 +63,19 @@ const ContainerCalculateProfit = ({
   productCount, 
   unitProfit 
 }) => {
-  const textColor = unitProfit > 0 ? 'green.700' : 'red.700';
-
+  let textColor = '';
+  
+  // Set textColor
+  if (unitProfit > 0) {
+    textColor = 'green.700';
+  }
+  else if (unitProfit < 0) {
+    textColor = 'red.700';
+  }
+  else {
+    textColor = 'gray.600'
+  }
+  
   return (
     <VStack 
       h="100%"
@@ -94,7 +105,7 @@ const ContainerCalculateProfit = ({
 
       {productCount !== 0 &&
         <Text color={textColor} fontWeight="medium">
-          {unitProfit > 0 &&
+          {unitProfit >= 0 &&
             <span>lucro de</span>
           }
 
@@ -318,11 +329,7 @@ const PricingCalculator = () => {
           results={[
             { 
               label: 'Custo total por unidade', 
-              value: totalCost 
-            },
-            { 
-              label: 'Porcentagem de lucro', 
-              value: '50%' 
+              value: `R$${totalCost}` 
             }
           ]}
         />
