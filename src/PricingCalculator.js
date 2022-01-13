@@ -15,7 +15,7 @@ import InputNumber from './components/InputNumber';
 
 const ResultBox = ({ label, value }) => {
   // Check if value doesn't exist
-  if (!value) return null;
+  if (value === null) return null;
 
   return (
     <Box>
@@ -113,13 +113,13 @@ const ContainerCalculateProfit = ({
 const PricingCalculator = () => {
   // Input values
   const [inputValues, setInputValues] = useState({ 
-    productCost: null,
-    sellCost: null,
-    packageCost: null,
-    shipmentCost: null,
-    taxesCost: null,
-    sellerCommission: null,
-    recommendationCommission: null,
+    productCost: 0,
+    sellCost: 0,
+    packageCost: 0,
+    shipmentCost: 0,
+    taxesCost: 0,
+    sellerCommission: 0,
+    recommendationCommission: 0,
     productCount: 5,
   });
 
@@ -135,10 +135,10 @@ const PricingCalculator = () => {
     // Check if value is an empty string.
     // Value will be an empty string when input is empty.
     if (value === '') {
-      // Update input value to empty string.
+      // Update input value to 0.
       setInputValues({
         ...inputValues, 
-        [name]: value 
+        [name]: 0 
       });
 
       return;
@@ -159,8 +159,8 @@ const PricingCalculator = () => {
     // Check if all inputs are filled
     const areAllInputsFilled = () => {
       for (let value of Object.values(inputValues)) {
-        // If value doesn't exist
-        if (!value) {
+        // Check if value is null
+        if (value === null) {
           return false;
         }
       }
@@ -195,6 +195,9 @@ const PricingCalculator = () => {
       // Update totalCost
       setTotalCost(newTotalCost);
     }
+    else {
+      setTotalCost(null);
+    }
   }, [inputValues]);
 
   return (
@@ -222,8 +225,8 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Custo do produto" 
-              value={inputValues.productCost !== null ? inputValues.productCost : ''}
-              placeholder="Custo do produto"
+              value={inputValues.productCost === 0 ? '' : inputValues.productCost}
+              placeholder="0.00"
               name="productCost"
               addon="$"
               helperText="Equivale a R$200 por unidade"
@@ -234,8 +237,8 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Preço de venda" 
-              value={inputValues.sellCost !== null ? inputValues.sellCost : ''}
-              placeholder="Preço de venda"
+              value={inputValues.sellCost === 0 ? '' : inputValues.sellCost}
+              placeholder="0.00"
               name="sellCost"
               addon="$"
             />
@@ -245,8 +248,8 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Custo da embalagem" 
-              value={inputValues.packageCost !== null ? inputValues.packageCost : ''}
-              placeholder="Custo da embalagem"
+              value={inputValues.packageCost === 0 ? '' : inputValues.packageCost}
+              placeholder="0.00"
               name="packageCost"
               addon="$"
             />
@@ -256,8 +259,8 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Custo do transporte" 
-              value={inputValues.shipmentCost !== null ? inputValues.shipmentCost : ''}
-              placeholder="Custo do transporte"
+              value={inputValues.shipmentCost === 0 ? '' : inputValues.shipmentCost}
+              placeholder="0.00"
               name="shipmentCost"
               addon="$"
             />
@@ -267,8 +270,8 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Comissão do vendedor (%)" 
-              value={inputValues.sellerCommission !== null ? inputValues.sellerCommission : ''}
-              placeholder="Comissão do vendedor"
+              value={inputValues.sellerCommission === 0 ? '' : inputValues.sellerCommission}
+              placeholder="0.0"
               name="sellerCommission"
               addon="%"
               addonSide="right"
@@ -280,8 +283,8 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Comissão da indicação (%)" 
-              value={inputValues.recommendationCommission !== null ? inputValues.recommendationCommission : ''}
-              placeholder="Comissão da indicação"
+              value={inputValues.recommendationCommission === 0 ? '' : inputValues.recommendationCommission}
+              placeholder="0.0"
               name="recommendationCommission"
               addon="%"
               addonSide="right"
@@ -293,8 +296,8 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Imposto (%)" 
-              value={inputValues.taxesCost !== null ? inputValues.taxesCost : ''}
-              placeholder="Custo do imposto"
+              value={inputValues.taxesCost === 0 ? '' : inputValues.taxesCost}
+              placeholder="0.0"
               name="taxesCost"
               addon="%"
               addonSide="right"
@@ -304,7 +307,7 @@ const PricingCalculator = () => {
           <GridItem>
             <ContainerCalculateProfit
               onChange={handleChange}
-              productCount={inputValues.productCount !== null ? inputValues.productCount : ''}
+              productCount={inputValues.productCount}
               totalProfit={totalProfit}
             />
           </GridItem>
