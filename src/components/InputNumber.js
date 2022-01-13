@@ -21,6 +21,7 @@ const InputNumber = ({
 }) => {
   return (
     <FormControl fontWeight="bold" w="inherit">
+
       <FormLabel 
         htmlFor={name} 
         color="gray.600"
@@ -44,6 +45,9 @@ const InputNumber = ({
           name={name}
           type="number"
           value={value}
+          min={0}
+          step="0.01"
+
           fontWeight="bold" 
           borderColor="gray.300"
           borderWidth="2px"

@@ -14,6 +14,9 @@ import {
 import InputNumber from './components/InputNumber';
 
 const ResultBox = ({ label, value }) => {
+  // Check if value doesn't exist
+  if (!value) return null;
+
   return (
     <Box>
       <Text 
@@ -80,7 +83,6 @@ const ContainerCalculateProfit = ({
         w="80px"
         bgColor="gray.50"
         borderWidth="1px"
-        min={1}
         value={productCount}
         _addon={{ 
           fontSize: 'sm', 
@@ -109,35 +111,54 @@ const ContainerCalculateProfit = ({
 }
 
 const PricingCalculator = () => {
+  // Input values
   const [inputValues, setInputValues] = useState({ 
-    productCost: '',
-    sellCost: '',
-    packageCost: '',
-    shipmentCost: '',
-    sellerCommission: '',
-    recommendationCommission: '',
-    taxesCost: '',
+    productCost: null,
+    sellCost: null,
+    packageCost: null,
+    shipmentCost: null,
+    taxesCost: null,
+    sellerCommission: null,
+    recommendationCommission: null,
     productCount: 5,
   });
+
   const [totalCost, setTotalCost] = useState(null);
   const [totalProfit, setTotalProfit] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
+    // Regex of a two decimal places number
+    const regex = /^\s*-?\d+(\.\d{1,2})?\s*$/;
+
+    // Check if value is an empty string.
+    // Value will be an empty string when input is empty.
+    if (value === '') {
+      // Update input value to empty string.
+      setInputValues({
+        ...inputValues, 
+        [name]: value 
+      });
+
+      return;
+    }
+    // Check if value is not a valid number 
+    else if (regex.test(value) === false) {
+      return;
+    }
+
+    // Update input value to a number.
     setInputValues({ 
       ...inputValues, 
-      [name]: value 
+      [name]: parseFloat(value) 
     });
   }
 
   useEffect(() => {
-
     // Check if all inputs are filled
     const areAllInputsFilled = () => {
-      for (let [key, value] of Object.entries(inputValues)) {
-        console.log({key, value});
-
+      for (let value of Object.values(inputValues)) {
         // If value doesn't exist
         if (!value) {
           return false;
@@ -147,8 +168,33 @@ const PricingCalculator = () => {
       return true;
     }
 
+    const getTotalCost = () => {
+      const { 
+        productCost, 
+        packageCost,
+        shipmentCost,
+        taxesCost,
+        sellerCommission,
+        recommendationCommission 
+      } = inputValues;
 
-    console.log(areAllInputsFilled());
+      return (
+        productCost 
+        + packageCost
+        + shipmentCost
+        + taxesCost
+        + (sellerCommission * productCost)
+        + (recommendationCommission * productCost)
+      );
+    }
+
+    // Make sure all inputs are filled
+    if (areAllInputsFilled()) {
+      const newTotalCost = getTotalCost();
+
+      // Update totalCost
+      setTotalCost(newTotalCost);
+    }
   }, [inputValues]);
 
   return (
@@ -176,7 +222,7 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Custo do produto" 
-              value={inputValues.productCost}
+              value={inputValues.productCost !== null ? inputValues.productCost : ''}
               placeholder="Custo do produto"
               name="productCost"
               addon="$"
@@ -188,7 +234,7 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Preço de venda" 
-              value={inputValues.sellCost}
+              value={inputValues.sellCost !== null ? inputValues.sellCost : ''}
               placeholder="Preço de venda"
               name="sellCost"
               addon="$"
@@ -199,7 +245,7 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Custo da embalagem" 
-              value={inputValues.packageCost}
+              value={inputValues.packageCost !== null ? inputValues.packageCost : ''}
               placeholder="Custo da embalagem"
               name="packageCost"
               addon="$"
@@ -210,7 +256,7 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Custo do transporte" 
-              value={inputValues.shipmentCost}
+              value={inputValues.shipmentCost !== null ? inputValues.shipmentCost : ''}
               placeholder="Custo do transporte"
               name="shipmentCost"
               addon="$"
@@ -221,7 +267,7 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Comissão do vendedor (%)" 
-              value={inputValues.sellerCommission}
+              value={inputValues.sellerCommission !== null ? inputValues.sellerCommission : ''}
               placeholder="Comissão do vendedor"
               name="sellerCommission"
               addon="%"
@@ -234,7 +280,7 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Comissão da indicação (%)" 
-              value={inputValues.recommendationCommission}
+              value={inputValues.recommendationCommission !== null ? inputValues.recommendationCommission : ''}
               placeholder="Comissão da indicação"
               name="recommendationCommission"
               addon="%"
@@ -247,7 +293,7 @@ const PricingCalculator = () => {
             <InputNumber
               onChange={handleChange} 
               label="Imposto" 
-              value={inputValues.taxesCost}
+              value={inputValues.taxesCost !== null ? inputValues.taxesCost : ''}
               placeholder="Custo do imposto"
               name="taxesCost"
               addon="$"
@@ -257,7 +303,7 @@ const PricingCalculator = () => {
           <GridItem>
             <ContainerCalculateProfit
               onChange={handleChange}
-              productCount={inputValues.productCount}
+              productCount={inputValues.productCount !== null ? inputValues.productCount : ''}
               totalProfit={totalProfit}
             />
           </GridItem>
@@ -266,8 +312,14 @@ const PricingCalculator = () => {
         
         <ContainerResults
           results={[
-            { label: 'Custo total por unidade', value: 'R$300' },
-            { label: 'Porcentagem de lucro', value: '50%' }
+            { 
+              label: 'Custo total por unidade', 
+              value: totalCost 
+            },
+            { 
+              label: 'Porcentagem de lucro', 
+              value: '50%' 
+            }
           ]}
         />
       </VStack>
