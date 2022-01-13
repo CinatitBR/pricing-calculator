@@ -111,7 +111,7 @@ const PricingCalculator = () => {
           as="h1"
           size="lg"
         >
-          Análise de custo
+          Análise de custos
         </Heading>
 
         <SimpleGrid 
