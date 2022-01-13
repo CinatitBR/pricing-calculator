@@ -156,18 +156,6 @@ const PricingCalculator = () => {
   }
 
   useEffect(() => {
-    // Check if all inputs are filled
-    const areAllInputsFilled = () => {
-      for (let value of Object.values(inputValues)) {
-        // Check if value is null
-        if (value === null) {
-          return false;
-        }
-      }
-
-      return true;
-    }
-
     const getTotalCost = () => {
       const { 
         productCost, 
@@ -182,22 +170,17 @@ const PricingCalculator = () => {
         productCost 
         + packageCost
         + shipmentCost
-        + taxesCost
-        + (sellerCommission * productCost)
-        + (recommendationCommission * productCost)
+        + ((taxesCost / 100) * productCost)
+        + ((sellerCommission / 100) * productCost)
+        + ((recommendationCommission / 100) * productCost)
       );
     }
 
-    // Make sure all inputs are filled
-    if (areAllInputsFilled()) {
-      const newTotalCost = getTotalCost();
+    // Get current total cost
+    const newTotalCost = getTotalCost();
 
-      // Update totalCost
-      setTotalCost(newTotalCost);
-    }
-    else {
-      setTotalCost(null);
-    }
+    // Update totalCost
+    setTotalCost(newTotalCost);
   }, [inputValues]);
 
   return (
