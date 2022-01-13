@@ -104,6 +104,7 @@ const PricingCalculator = () => {
       bg="gray.50"
       p="24px"
       borderRadius="8px"
+      boxShadow="lg"
     >
       <VStack spacing="40px" align="flex-start">
 
