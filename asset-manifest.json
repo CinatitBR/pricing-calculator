@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/product-cost-analysis/static/js/main.bb8a3c5f.js",
+    "index.html": "/product-cost-analysis/index.html",
+    "main.bb8a3c5f.js.map": "/product-cost-analysis/static/js/main.bb8a3c5f.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.bb8a3c5f.js"
+  ]
+}
