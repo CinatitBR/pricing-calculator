@@ -292,11 +292,12 @@ const PricingCalculator = () => {
           <GridItem>
             <InputNumber
               onChange={handleChange} 
-              label="Imposto" 
+              label="Imposto (%)" 
               value={inputValues.taxesCost !== null ? inputValues.taxesCost : ''}
               placeholder="Custo do imposto"
               name="taxesCost"
-              addon="$"
+              addon="%"
+              addonSide="right"
             />
           </GridItem>
 
