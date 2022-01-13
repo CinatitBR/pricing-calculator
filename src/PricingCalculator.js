@@ -30,6 +30,7 @@ const PricingCalculator = () => {
   // Absolute values from the percentage
   const sellerCommissionAbs = +((inputValues.sellerCommission / 100) * inputValues.productCost).toFixed(2);
   const recommendationComissionAbs = +((inputValues.recommendationCommission / 100) * inputValues.productCost).toFixed(2);
+  const taxesAbs = +((inputValues.taxesPercentage / 100) * inputValues.productCost).toFixed(2);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -197,6 +198,7 @@ const PricingCalculator = () => {
               name="taxesPercentage"
               addon="%"
               addonSide="right"
+              helperText={`Equivale a R$${taxesAbs} por unidade`}
             />
           </GridItem>
 
