@@ -28,8 +28,8 @@ const PricingCalculator = () => {
   const [unitProfit, setUnitProfit] = useState(0);
 
   // Absolute values from the percentage
-  const sellerCommissionAbs = inputValues.sellerCommission * inputValues.productCost;
-  const recommendationComissionAbs = inputValues.sellerCommission * inputValues.productCost;
+  const sellerCommissionAbs = +((inputValues.sellerCommission / 100) * inputValues.productCost).toFixed(2);
+  const recommendationComissionAbs = +((inputValues.recommendationCommission / 100) * inputValues.productCost).toFixed(2);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -71,14 +71,14 @@ const PricingCalculator = () => {
         recommendationCommission 
       } = inputValues;
 
-      return (
+      return +(
         productCost 
         + packageCost
         + shipmentCost
         + ((taxesCost / 100) * productCost)
         + ((sellerCommission / 100) * productCost)
         + ((recommendationCommission / 100) * productCost)
-      );
+      ).toFixed(2);
     }
 
     // Get current total cost
