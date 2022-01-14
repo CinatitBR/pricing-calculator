@@ -17,7 +17,7 @@ const PricingCalculator = () => {
     productCost: 0,
     sellCost: 0,
     packageCost: 0,
-    shipmentCost: 0,
+    shipmentPercentage: 0,
     taxesPercentage: 0,
     sellerCommission: 0,
     recommendationCommission: 0,
@@ -31,6 +31,7 @@ const PricingCalculator = () => {
   const sellerCommissionAbs = +((inputValues.sellerCommission / 100) * inputValues.productCost).toFixed(2);
   const recommendationComissionAbs = +((inputValues.recommendationCommission / 100) * inputValues.productCost).toFixed(2);
   const taxesAbs = +((inputValues.taxesPercentage / 100) * inputValues.productCost).toFixed(2);
+  const shipmentAbs = +((inputValues.shipmentPercentage / 100) * inputValues.productCost).toFixed(2);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -66,7 +67,7 @@ const PricingCalculator = () => {
       const { 
         productCost, 
         packageCost,
-        shipmentCost,
+        shipmentPercentage,
         taxesPercentage,
         sellerCommission,
         recommendationCommission 
@@ -75,7 +76,7 @@ const PricingCalculator = () => {
       return +(
         productCost 
         + packageCost
-        + shipmentCost
+        + ((shipmentPercentage / 100) * productCost)
         + ((taxesPercentage / 100) * productCost)
         + ((sellerCommission / 100) * productCost)
         + ((recommendationCommission / 100) * productCost)
@@ -127,7 +128,7 @@ const PricingCalculator = () => {
               value={inputValues.productCost === 0 ? '' : inputValues.productCost}
               placeholder="0.00"
               name="productCost"
-              addon="$"
+              addon="R$"
             />
           </GridItem>
 
@@ -138,7 +139,7 @@ const PricingCalculator = () => {
               value={inputValues.sellCost === 0 ? '' : inputValues.sellCost}
               placeholder="0.00"
               name="sellCost"
-              addon="$"
+              addon="R$"
             />
           </GridItem>
 
@@ -149,18 +150,20 @@ const PricingCalculator = () => {
               value={inputValues.packageCost === 0 ? '' : inputValues.packageCost}
               placeholder="0.00"
               name="packageCost"
-              addon="$"
+              addon="R$"
             />
           </GridItem>
 
           <GridItem>
             <InputNumber
               onChange={handleChange} 
-              label="Custo do transporte" 
-              value={inputValues.shipmentCost === 0 ? '' : inputValues.shipmentCost}
+              label="Transporte (%)" 
+              value={inputValues.shipmentPercentage === 0 ? '' : inputValues.shipmentPercentage}
               placeholder="0.00"
-              name="shipmentCost"
-              addon="$"
+              name="shipmentPercentage"
+              addon="%"
+              addonSide="right"
+              helperText={`Equivale a R$${shipmentAbs} por unidade`}
             />
           </GridItem>
 
