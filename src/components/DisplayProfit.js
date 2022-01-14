@@ -35,8 +35,7 @@ const DisplayProfit = ({
         label="Cálculo de lucro"
         name="productCount"
         addon="Unidades"
-        addonSide="right"
-        w="80px"
+        w="60px"
         bgColor="gray.50"
         borderWidth="1px"
         value={productCount === 0 ? '' : productCount}
